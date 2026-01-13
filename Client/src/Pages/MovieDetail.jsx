@@ -15,6 +15,9 @@ const MovieDetails = () => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
 
+  console.log(details);
+  
+
   if (loading) {
     return (
       <div className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center text-gray-400">
@@ -73,6 +76,10 @@ const MovieDetails = () => {
             {details.Genre}
           </p>
 
+          <p className="text-sm text-indigo-400 font-medium uppercase tracking-wider">
+            Rating: {details.Ratings[0].Value}
+          </p>
+
           <p className="text-gray-300 leading-relaxed">{details.Plot}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300">
@@ -84,6 +91,12 @@ const MovieDetails = () => {
             </p>
             <p>
               <span className="text-gray-400">Language:</span> {details.Language}
+            </p>
+            <p>
+              <span className="text-gray-400">IMDB Rating: </span>{details.imdbRating} ({details.imdbVotes})
+            </p>
+             <p>
+              <span className="text-gray-400">Country:</span> {details.Country}
             </p>
             <p>
               <span className="text-gray-400">Runtime:</span> {details.Runtime}
