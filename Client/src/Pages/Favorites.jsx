@@ -16,6 +16,13 @@ const Favorites = () => {
     if (favorites.length === 0) dispatch(fetchFavorites());
   }, [dispatch, favorites.length]);
 
+  useEffect(() => {
+    if (user && favorites.length === 0) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, user, favorites.length]);
+
+
   // console.log(favorites);
 
   const handleRemove = async (id) => {
