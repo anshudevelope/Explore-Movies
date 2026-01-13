@@ -35,7 +35,7 @@ const Navbar = () => {
         </Link>
 
         <div className="text-white text-xl">
-          Hello, {user?.name || "Guest"}
+          {user?.name || "Guest"}
         </div>
 
         {/* Navigation */}

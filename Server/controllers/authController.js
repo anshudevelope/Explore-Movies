@@ -2,6 +2,10 @@ const User = require("../models/userModel.js");
 const bcrypt = require("bcryptjs");
 const generateToken = require("../utils/generateToken.js");
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
+
 exports.register = async (req, res) => {
     let user;
 
@@ -14,6 +18,21 @@ exports.register = async (req, res) => {
                 message: "name, email & password required"
             });
         }
+
+        // if (!emailRegex.test(email)) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message: "Invalid email format",
+        //     });
+        // }
+
+        // if (!passwordRegex.test(password)) {
+        //     return res.status(400).json({
+        //         success: false,
+        //         message:
+        //             "Password must be at least 8 characters and include uppercase, lowercase, number and special character",
+        //     });
+        // }
 
         const userExists = await User.findOne({ email });
         if (userExists) {

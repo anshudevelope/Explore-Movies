@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../api/api.jsx";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -15,6 +16,7 @@ const RegisterPage = () => {
 
     try {
       await api.post("/auth/register", form);
+      toast("User registered successfully")
       navigate("/login");
     } catch {
       setError("User already exists");

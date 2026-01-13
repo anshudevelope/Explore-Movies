@@ -12,7 +12,7 @@ exports.addFavorite = async (req, res) => {
             data: favorite
         });
     } catch (error) {
-        console.error("Add Favorite Error:", error);
+        console.error("Failed to add favorites:", error);
 
         return res.status(500).json({
             success: false,
@@ -30,7 +30,7 @@ exports.getFavorites = async (req, res) => {
             data: favorites
         });
     } catch (error) {
-        console.error("Get Favorites Error:", error);
+        console.error("Failed to fetch data:", error);
 
         return res.status(500).json({
             success: false,

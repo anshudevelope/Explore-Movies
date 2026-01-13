@@ -50,7 +50,7 @@ const HomePage = () => {
           value={query}
           onChange={handleChange}
           placeholder="Search movies..."
-          className="w-full px-5 py-4 rounded-xl bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="w-full px-5 py-4 rounded-xl bg-gray-700 text-white placeholder-gray-400 border border-gray-700 focus:outline-none animate-pulse focus:animate-pulse focus:ring-2 focus:ring-indigo-500"
         />
       </div>
 
@@ -100,7 +100,7 @@ const HomePage = () => {
         </>
       )}
 
-      <div className="space-y-20 my-16">
+      <div className="space-y-20 my-20">
         {/* Feature Section */}
         <section className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <div>
