@@ -10,6 +10,9 @@ const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
   // console.log(user);
 
+  console.log("Redux user:", user);
+  console.log("Token:", localStorage.getItem("token"));
+
   const dispatch = useDispatch();
 
   const favoritesCount = useSelector(
@@ -18,7 +21,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(clearFavorites()); 
+    dispatch(clearFavorites());
     toast.success("Logged out successfully!");
     navigate("/");
   };

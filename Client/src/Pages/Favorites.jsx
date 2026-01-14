@@ -12,9 +12,9 @@ const Favorites = () => {
 
   const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    if (favorites.length === 0) dispatch(fetchFavorites());
-  }, [dispatch, favorites.length]);
+  // useEffect(() => {
+  //   if (favorites.length === 0) dispatch(fetchFavorites());
+  // }, [dispatch, favorites.length]);
 
   useEffect(() => {
     if (user && favorites.length === 0) {
@@ -23,7 +23,7 @@ const Favorites = () => {
   }, [dispatch, user, favorites.length]);
 
 
-  // console.log(favorites);
+  console.log(favorites);
 
   const handleRemove = async (id) => {
     try {
