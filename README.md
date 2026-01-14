@@ -62,41 +62,41 @@ The project demonstrates real-world authentication, protected routes, API integr
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
+```bash
 Movie-Explorer/
 │
 ├── Client/
-│ ├── public/
-│ ├── src/
-│ │ ├── api/ # Axios instance & interceptors
-│ │ ├── components/ # Reusable UI components
-│ │ ├── features/ # Redux slices
-│ │ │ ├── auth/
-│ │ │ ├── movies/
-│ │ │ └── favorites/
-│ │ ├── pages/ # Application pages
-│ │ ├── routes/ # Protected routes
-│ │ ├── utils/ # Helper utilities (debounce, etc.)
-│ │ ├── store.js # Redux store
-│ │ └── main.jsx
-│ ├── index.html
-│ ├── vite.config.js
-│ └── package.json
+│   ├── public/
+│   ├── src/
+│   │   ├── api/                 # Axios instance & interceptors
+│   │   ├── components/          # Reusable UI components
+│   │   ├── features/            # Redux slices
+│   │   │   ├── auth/             # Authentication state
+│   │   │   ├── movies/           # Movie search & details state
+│   │   │   └── favorites/        # Favorites management state
+│   │   ├── pages/               # Application pages
+│   │   ├── routes/              # Protected routes
+│   │   ├── utils/               # Helper utilities (debounce, etc.)
+│   │   ├── store.js             # Redux store configuration
+│   │   └── main.jsx             # App entry point
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
 │
 ├── Server/
-│ ├── config/ # Database & environment config
-│ ├── controllers/ # Request handlers
-│ ├── middlewares/ # Auth & error middlewares
-│ ├── models/ # Mongoose schemas
-│ ├── routes/ # API routes
-│ ├── utils/ # Helper utilities
-│ ├── index.js # Server entry point
-│ └── package.json
+│   ├── config/                  # Database & environment configuration
+│   ├── controllers/             # Business logic handlers
+│   ├── middlewares/             # Auth & global error middleware
+│   ├── models/                  # Mongoose schemas
+│   ├── routes/                  # API routes
+│   ├── utils/                   # Helper utilities
+│   ├── index.js                 # Server entry point
+│   └── package.json
 │
 └── README.md
 
----
 
 ## 🔐 Authentication Flow
 
