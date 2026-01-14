@@ -2,21 +2,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovieDetails } from "../features/movies/MovieSlice.jsx";
 import { addFavorite } from "../features/favorites/FavoriteSlice.jsx";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { details, loading } = useSelector((state) => state.movies);
   const favorites = useSelector((state) => state.favorites.list || []);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     dispatch(getMovieDetails(id));
   }, [dispatch, id]);
-
-  console.log(details);
-  
 
   if (loading) {
     return (
@@ -28,9 +28,19 @@ const MovieDetails = () => {
 
   if (!details) return null;
 
-  const isFavorite = favorites.some((movie) => movie.imdbID === details.imdbID);
+  const isFavorite = favorites.some(
+    (movie) => movie.imdbID === details.imdbID
+  );
 
   const handleAddFavorite = async () => {
+    // 🔒 User not logged in
+    if (!user) {
+      toast.error("Please login to add favorites");
+      navigate("/login");
+      return;
+    }
+
+    // ✅ Already favorite
     if (isFavorite) {
       toast("Movie is already in favorites", { icon: "ℹ️" });
       return;
@@ -56,6 +66,7 @@ const MovieDetails = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-800 text-white px-6 py-12">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+
         {/* Poster */}
         <div className="md:col-span-1 flex justify-center">
           <img
@@ -69,7 +80,9 @@ const MovieDetails = () => {
         <div className="md:col-span-2 space-y-5">
           <h2 className="text-4xl font-bold tracking-wide">
             {details.Title}
-            <span className="text-gray-400 text-xl ml-3">({details.Year})</span>
+            <span className="text-gray-400 text-xl ml-3">
+              ({details.Year})
+            </span>
           </h2>
 
           <p className="text-sm text-indigo-400 font-medium uppercase tracking-wider">
@@ -77,30 +90,23 @@ const MovieDetails = () => {
           </p>
 
           <p className="text-sm text-indigo-400 font-medium uppercase tracking-wider">
-            Rating: {details.Ratings[0].Value}
+            Rating: {details.Ratings?.[0]?.Value || "N/A"}
           </p>
 
-          <p className="text-gray-300 leading-relaxed">{details.Plot}</p>
+          <p className="text-gray-300 leading-relaxed">
+            {details.Plot}
+          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300">
+            <p><span className="text-gray-400">Actors:</span> {details.Actors}</p>
+            <p><span className="text-gray-400">Director:</span> {details.Director}</p>
+            <p><span className="text-gray-400">Language:</span> {details.Language}</p>
             <p>
-              <span className="text-gray-400">Actors:</span> {details.Actors}
+              <span className="text-gray-400">IMDB Rating:</span>{" "}
+              {details.imdbRating} ({details.imdbVotes})
             </p>
-            <p>
-              <span className="text-gray-400">Director:</span> {details.Director}
-            </p>
-            <p>
-              <span className="text-gray-400">Language:</span> {details.Language}
-            </p>
-            <p>
-              <span className="text-gray-400">IMDB Rating: </span>{details.imdbRating} ({details.imdbVotes})
-            </p>
-             <p>
-              <span className="text-gray-400">Country:</span> {details.Country}
-            </p>
-            <p>
-              <span className="text-gray-400">Runtime:</span> {details.Runtime}
-            </p>
+            <p><span className="text-gray-400">Country:</span> {details.Country}</p>
+            <p><span className="text-gray-400">Runtime:</span> {details.Runtime}</p>
           </div>
 
           {/* Action Button */}
@@ -114,7 +120,11 @@ const MovieDetails = () => {
                   : "bg-indigo-600 hover:bg-indigo-700"
               }`}
             >
-              {isFavorite ? "Already Added" : "Add to Favorites"}
+              {!user
+                ? "Login to Add Favorites"
+                : isFavorite
+                ? "Already Added"
+                : "Add to Favorites"}
             </button>
           </div>
         </div>

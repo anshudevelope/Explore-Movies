@@ -27,7 +27,7 @@ const HomePage = () => {
   };
 
   // console.log(list);
-  
+
   const changePage = (page) => {
     dispatch(searchMovies({ query, page }));
   };
@@ -56,39 +56,55 @@ const HomePage = () => {
 
       {query && (
         <>
-          <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-10">
-            {list?.map((movie) => (
-              <div
-                key={movie.imdbID}
-                className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <img
-                  src={
-                    movie.Poster !== "N/A"
-                      ? movie.Poster
-                      : "/no-poster.png"
-                  }
-                  alt={movie.Title}
-                  className="h-64 w-full object-cover"
-                />
+          {/* Results Grid */}
+          {list.length > 0 && (
+            <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-10">
+              {list.map((movie) => (
+                <div
+                  key={movie.imdbID}
+                  className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
+                >
+                  <img
+                    src={
+                      movie.Poster !== "N/A"
+                        ? movie.Poster
+                        : "/no-poster.png"
+                    }
+                    alt={movie.Title}
+                    className="h-64 w-full object-cover"
+                  />
 
-                <div className="p-4 space-y-2">
-                  <h3 className="text-sm font-semibold truncate">
-                    {movie.Title}
-                  </h3>
+                  <div className="p-4 space-y-2">
+                    <h3 className="text-sm font-semibold truncate">
+                      {movie.Title}
+                    </h3>
 
-                  <Link
-                    to={`/movie/${movie.imdbID}`}
-                    className="inline-block text-sm text-indigo-400 hover:text-indigo-300 transition"
-                  >
-                    View Details →
-                  </Link>
+                    <Link
+                      to={`/movie/${movie.imdbID}`}
+                      className="inline-block text-sm text-indigo-400 hover:text-indigo-300 transition"
+                    >
+                      View Details →
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {totalResults > 10 && (
+          {/* No Results Message */}
+          {!loading && list.length === 0 && (
+            <div className="text-center text-gray-400 mt-16">
+              <p className="text-xl font-semibold">
+                No movies found
+              </p>
+              <p className="text-sm mt-2">
+                Try searching with a different title
+              </p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalResults > 10 && list.length > 0 && (
             <div className="my-12 flex justify-center">
               <Pagination
                 page={currentPage}
@@ -99,6 +115,7 @@ const HomePage = () => {
           )}
         </>
       )}
+
 
       <div className="space-y-20 my-20">
         {/* Feature Section */}

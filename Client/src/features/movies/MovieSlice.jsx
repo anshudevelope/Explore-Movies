@@ -37,15 +37,20 @@ const MovieSlice = createSlice({
         state.loading = false;
         state.list = action.payload.Search || [];
         state.totalResults = Number(action.payload.totalResults || 0);
+
+        // ✅ FIX: update active page
+        state.currentPage = action.meta.arg.page;
       })
       .addCase(searchMovies.rejected, (state) => {
         state.loading = false;
+        state.list = [];
+        state.totalResults = 0;
       })
 
       // 🔹 DETAILS
       .addCase(getMovieDetails.pending, (state) => {
         state.loading = true;
-        state.details = null; // reset
+        state.details = null;
       })
       .addCase(getMovieDetails.fulfilled, (state, action) => {
         state.loading = false;
